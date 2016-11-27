@@ -17,10 +17,28 @@ defmodule Sediment.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+
+    get  "/notebooks", NotebookController, :index
+    post "/notebooks", NotebookController, :create
+    put    "/notebooks/:notebook_id", NotebookController, :update
+    delete "/notebooks/:notebook_id", NotebookController, :delete
+
+    get  "/notes", NoteController, :index
+    post "/notes", NoteController, :create
+    put    "/notes/:note_id", NoteController, :update
+    delete "/notes/:note_id", NoteController, :delete
+
+    get  "/tasks", TaskController, :index
+    post "/tasks", TaskController, :create
+    put    "/tasks/:note_id", TaskController, :update
+    delete "/tasks/:note_id", TaskController, :delete
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Sediment do
-  #   pipe_through :api
-  # end
+  scope "/api", Sediment do
+    pipe_through :api
+
+    post "/notebooks", NotebookController, :create_api
+
+  end
 end
